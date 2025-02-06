@@ -1,0 +1,44 @@
+.pokeform {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px; /* Ajustar el tamaño del formulario */
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  }
+  
+  .pokeform h1{
+    font-size: 22px;
+  font-weight: bold;
+  color: #4470ff;
+  }
+  .pokeform label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .pokeform input,
+  .pokeform select,
+  .pokeform button {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  .pokeform button {
+    background-color: #ffcc00;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .pokeform button:hover {
+    background-color: #ffdd44;
+  }
+  
