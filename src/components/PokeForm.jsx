@@ -10,7 +10,7 @@ function PokeForm({onSearch}) {
     const [name, setName] = useState("")
     const [language, setLanguage] = useState("7")   //Español por defecto
     const [filteredPokemons, setFilteredPokemons] = useState([])  //pokemons filtrados por lenguaje, para la lista del form
-    
+
     // CARGAR TODOS LOS POKEMONS EN POKEMONLIST AL MONTAR EL COMPONENTE
     useEffect(() => {
         getPokemonData().then((data) => {
@@ -23,9 +23,10 @@ function PokeForm({onSearch}) {
 
     // FILTRAR POKEMONS POR IDIOMA CUANDO CAMBIA EL LENGUAJE SELECCIONADO (O CUANDO CARGA LA LISTA), PARA LA LISTA DEL FORMULARIO
     useEffect(()=>{
+
         const filtered = pokemonList.filter((pokemon) => pokemon.local_language_id  === language)
 
-        
+
         // const filteredPokemons = [];
         // for (let i = 0; i < pokemonList.length; i++) {
         //     if (pokemonList[i].local_language_id === language) {
@@ -33,18 +34,20 @@ function PokeForm({onSearch}) {
         //     }
         //   }
 
-       //El if no seria necesario (solo lo de dentro), es por si se elige el mismo lenguaje, que no lo vuelva a cargar.
-       if (JSON.stringify(filtered) !== JSON.stringify(filteredPokemons)) {
-        setFilteredPokemons(filtered);
-      }
-   
 
-    }, [pokemonList, language]) 
+        /*
+        Esto solo se ejecuta si cambia la lista (que no cambia durante la aplicación) o el idioma
+        Con lo que el If te sobra
+        */
+        setFilteredPokemons(filtered);
+
+
+    }, [pokemonList, language])
 
 
     //BUSCA EL POKEMON SI EXISTE PARA PASARSELO AL PADRE
     function handleSearch() {
-    
+
         if (name.trim() === "") {
             console.log("⚠️ Escribe un nombre antes de buscar.");
             return;

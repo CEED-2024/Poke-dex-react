@@ -9,31 +9,43 @@ function PokeData({ species_id }) {
 
   const [pokemon, setPokemon] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [error, setError] =useState(false)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
-    //resetea en cada busqueda
-    setLoading(true)
-    setPokemon(null) 
-    setError(false)
+    // Nadie usa ya el .then para esto, utiliza funciones asíncronas
 
+    async function loadData() {
+      //resetea en cada busqueda
+      setLoading(true)
+      setPokemon(null)
+      setError(false)
 
-    getSpeciesSprite(species_id)
-      .then((url) => {
-        if(!url){
+      // Esta funcion la puedes reutilizar, al contrario de como habías hecho
+      function wait(ms) {
+        return new Promise((resolve) => {
+          setTimeout(resolve, ms);
+        });
+      }
+
+      try {
+        const url = await getSpeciesSprite(species_id)
+        if (!url) {
           throw new Error(`No se encuentra un pokemon con id ${species_id}`)
         }
-     setTimeout(() => {    
-          setPokemon(url);  //añado setTimeout porque sino no se aprecia el loading
-          setLoading(false)
-        }, 800)
-      })
-      
-      .catch((err)=>{
+
+        await wait(800)
+
+        setPokemon(url);  //añado setTimeout porque sino no se aprecia el loading
+        setLoading(false)
+      }
+      catch (err) {
         console.error(err.message)
         setLoading(false)
         setError(true)
-      })
+      }
+    }
+
+    loadData()
 
   }, [species_id]) //Se ejecuta cuando cambia el id. si estuviera vacio, se ejecutaria solo una vez cuando el componente se monta
 
@@ -41,7 +53,7 @@ function PokeData({ species_id }) {
   return (
     <div className="pokedata">
       <h2>Pokémon {species_id}</h2>
-                    {/* {loading ? <Loading /> : <img src={pokemon} alt={`Pokémon ${species_id}`} />} */}
+      {/* {loading ? <Loading /> : <img src={pokemon} alt={`Pokémon ${species_id}`} />} */}
 
       {/* Si está cargando, mostrar el spinner */}
       {loading && <Loading />}
